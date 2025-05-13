@@ -5,7 +5,7 @@ categories: [HTB Easy Machines]
 tags: [Easy, Linux, HTB, Daloradius, SNMP, Hashcat, UDP]
 ---
 
-![alt text](../../assets/img/underpass/image.png)
+<img src="../../assets/img/underpass/image.png">
 
 UnderPass is an easy HTB machine where you have to perform a `UDP scan` to discover a running `SNMP service` where information leaks and reveals that `Daloradius` is running on the web service. From there, we get a user and hash that we use to `SSH` into the machine, once inside we find a binary that can be run as `sudo`, gaining root access.
 
@@ -34,7 +34,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 > SSH, HTTP
 
 Let's take a look at [http://10.10.11.48/](http://10.10.11.48/):
-![alt text](../../assets/img/underpass/image2.png)
+<img src="../../assets/img/underpass/image2.png">
 
 Nothing comes up when fuzzing for directories:
 ```bash
@@ -113,14 +113,14 @@ Copyright (c) 2005-2015 by Matteo Cantoni (www.nothink.org)
 
 ## Daloradius
 The daloradius endpoint exists:
-![alt text](../../assets/img/underpass/image3.png)
+<img src="../../assets/img/underpass/image3.png">
 
 After some fuzzing and poking around I found a interesting login panel at [http://underpass.htb/daloradius/app/operators/](http://underpass.htb/daloradius/app/operators/):
-![alt text](../../assets/img/underpass/image4.png)
+<img src="../../assets/img/underpass/image4.png">
 > Default credentials `administrator:radius` work!
 
 More looking around landed me users management panel at [http://underpass.htb/daloradius/app/operators/mng-list-all.php](http://underpass.htb/daloradius/app/operators/mng-list-all.php):
-![alt text](../../assets/img/underpass/image5.png)
+<img src="../../assets/img/underpass/image5.png">
 > We got an username and a hashed password `svcMosh:412DD4759978ACFCC81DEAB01B382403`
 
 ### hashcat
@@ -198,4 +198,5 @@ There is NO WARRANTY, to the extent permitted by law.
 root@underpass:~# cat root.txt
 e4a4bbcf68ba2cf977dfc638ddfc32a7
 ```
+
 
