@@ -5,7 +5,7 @@ categories: [HTB Medium Machines]
 tags: [Medium, Linux, HTB, PHP, Laravel, CVE-2024-52301, File Upload, GPG, BASH_ENV, Path Hijacking]
 ---
 
-<img src="/assets/img/environment/image.png">
+<img src="/assets/img/environment/image.png" alt="/assets/img/environment/image.png">
 
 Environment is a medium HTB machine where thanks to `information disclosure` we find a vulnerable `Laravel` version that allows us to bypass a login screen. From there we gain access to the machine thanks to `file upload`, inside we can use `GPG` to decrypt a sensitive file letting us move laterally. Finally we abuse `path hijacking` in a script that we can run as sudo to root the machine.
 
@@ -34,7 +34,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 > Let’s add the domain to our /etc/hosts file: `echo -e '10.10.11.67\tenvironment.htb' | sudo tee -a /etc/hosts`
 
 Let's have a look at [http://environment.htb](http://environment.htb):
-<img src="/assets/img/environment/image2.png">
+<img src="/assets/img/environment/image2.png" alt="/assets/img/environment/image2.png">
 
 Fuzzing for directories reveals some interesting stuff:
 
@@ -71,34 +71,34 @@ mailing                 [Status: 405, Size: 244871, Words: 46159, Lines: 2576, D
 ##  CVE-2024-52301
 
 Visiting [http://environment.htb/upload](http://environment.htb/upload) reveals some information about what is running in the background:
-<img src="/assets/img/environment/image3.png">
+<img src="/assets/img/environment/image3.png" alt="/assets/img/environment/image3.png">
 > PHP and Laravel version
 
 A quick Google search of the Laravel version shows that it's vulnerable to [CVE-2024-52301](https://github.com/Nyamort/CVE-2024-52301).
 
 Intercepting the login request from [http://environment.htb/login](http://environment.htb/login) using BurpSuite and removing the value of `remember` will return an internal server error with some information:
-<img src="/assets/img/environment/image4.png">
+<img src="/assets/img/environment/image4.png" alt="/assets/img/environment/image4.png">
 > No `remember` value
 
-<img src="/assets/img/environment/image5.png">
+<img src="/assets/img/environment/image5.png" alt="/assets/img/environment/image5.png">
 > If the environment is set as `preprod`, login directly to `/management/dashboard`
 
 We can now make us of the CVE to bypass the login panel:
-<img src="/assets/img/environment/image6.png">
+<img src="/assets/img/environment/image6.png" alt="/assets/img/environment/image6.png">
 > Using `?--env=preprod` to change the environment
 
 We're now inside the management dashboard:
-<img src="/assets/img/environment/image7.png">
+<img src="/assets/img/environment/image7.png" alt="/assets/img/environment/image7.png">
 
 # Lateral Movement
 ## Shell as www-data
 
 In [http://environment.htb/management/profile](http://environment.htb/management/profile) we can update our profile picture, we can abuse that to upload a `.php` [webshell](https://gist.github.com/joswr1ght/22f40787de19d80d110b37fb79ac3985):
-<img src="/assets/img/environment/image8.png">
+<img src="/assets/img/environment/image8.png" alt="/assets/img/environment/image8.png">
 > We added a `.` after the filename to break the filtering, and the GIF magic bytes: `GIF87a` at the beggining of the content itself
 
 Visiting [http://environment.htb/storage/files/shell.php](http://environment.htb/storage/files/shell.php) we access the webshell:
-<img src="/assets/img/environment/image9.png">
+<img src="/assets/img/environment/image9.png" alt="/assets/img/environment/image9.png">
 
 Let's get a reverse shell for more commodity:
 ```bash
@@ -198,6 +198,7 @@ root@environment:/home/hish#
 root@environment:~# cat root.txt
 3c79a7e7d6dfb484d4ea6eceac4b8992
 ```
+
 
 
 

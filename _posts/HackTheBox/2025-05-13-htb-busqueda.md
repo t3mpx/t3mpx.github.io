@@ -7,7 +7,7 @@ tags: [Easy, Linux, HTB, CVE-2023-43364, Gitea, Docker, Script Hijack]
 
 Busqueda is an easy HTB machine where we abuse an exploit to get a foothold on the machine. From there we can run a python script as sudo that tells us that `gitea` is running, then looking inside a SQL database we get credentials to access `gitea`. From there we can read the `python` script and abuse how it works to get root.
 
-<img src="/assets/img/busqueda/image.png">
+<img src="/assets/img/busqueda/image.png" alt="/assets/img/busqueda/image.png">
 
 # Reconnaissance
 ```bash
@@ -34,7 +34,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 > Let’s add the domain to our /etc/hosts file: `echo -e '10.10.11.208\tsearcher.htb' | sudo tee -a /etc/hosts`
 
 Let's take a look at [http://searcher.htb](http://searcher.htb):
-<img src="/assets/img/busqueda/image2.png">
+<img src="/assets/img/busqueda/image2.png" alt="/assets/img/busqueda/image2.png">
 > We got the version: `Searchor 2.4.0`
 
 # Exploit
@@ -136,10 +136,10 @@ mysql> select name, passwd from user;
 ```
 
 We can log in to the `gitea` web using the `administrator` user and the same password from the mysql:
-<img src="/assets/img/busqueda/image3.png">
+<img src="/assets/img/busqueda/image3.png" alt="/assets/img/busqueda/image3.png">
 
 Inside [http://gitea.searcher.htb/administrator/scripts/src/branch/main/system-checkup.py](http://gitea.searcher.htb/administrator/scripts/src/branch/main/system-checkup.py) we can now read the python script:
-<img src="/assets/img/busqueda/image4.png">
+<img src="/assets/img/busqueda/image4.png" alt="/assets/img/busqueda/image4.png">
 > We're interested in the `./full-checkup.sh`
 
 Since the option `full-checkup` is looking for a script called `full-checkup.sh` in the current folder, we can create our malicious `.sh` script to abuse this:
@@ -164,6 +164,7 @@ bash-5.1#
 bash-5.1# cat /root/root.txt
 b5c0b5186722822a20618ecb54f25d29
 ```
+
 
 
 
