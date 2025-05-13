@@ -5,7 +5,7 @@ categories: [HTB Easy Machines]
 tags: [Easy, Linux, HTB, CVE-2024-9264, Local Port Forward, Grafana, Crontab, Docker]
 ---
 
-<img src="../../assets/img/planning/image.png">
+<img src="/assets/img/planning/image2.png">
 
 Planning is an easy HTB machine where you have to find a `subdomain` running `Grafana`, using the credentials provided we abuse a `CVE` to gain root access to a `docker`, where we can then move laterally to the main box. Finally we abuse `crontab` to gain root access.
 
@@ -34,7 +34,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 > Let’s add the domain to our /etc/hosts file: `echo -e '10.10.11.68\tplanning.htb' | sudo tee -a /etc/hosts`
 
 Let's take a look at [http://planning.htb](http://planning.htb):
-<img src="../../assets/img/planning/image2.png">
+<img src="/assets/img/planning/image2.png">
 > Rabbit hole...
 
 Fuzzing for subdomains return the following:
@@ -64,7 +64,7 @@ grafana                 [Status: 200, Size: 38241, Words: 2697, Lines: 324, Dura
 # Exploit
 ## CVE-2024-9264
 Visiting [http://grafana.planning.htb](http://grafana.planning.htb) gives us the version of Grafana on the bottom right:
-<img src="../../assets/img/planning/image3.png">
+<img src="/assets/img/planning/image3.png">
 >A quick google search returns a RCE [CVE](https://github.com/z3k0sec/CVE-2024-9264-RCE-Exploit) exploit.
 
 ```bash
@@ -162,14 +162,14 @@ sshpass -p 'RioTecRANDEntANT!' ssh -NL 8000:127.0.0.1:8000 enzo@planning.htb
 ```
 
 We're greeted by an authentication panel:
-<img src="../../assets/img/planning/image4.png">
+<img src="/assets/img/planning/image4.png">
 >root:P4ssw0rdS0pRi0T3c works
 
 Once inside, we see that we have the same config that we found in the previous file:
-<img src="../../assets/img/planning/image5.png">
+<img src="/assets/img/planning/image5.png">
 
 Let's create a new job and run it:
-<img src="../../assets/img/planning/image6.png">
+<img src="/assets/img/planning/image6.png">
 
 ```bash
 [t3mpx@parrot]─[~/htb/easy/planning]
@@ -184,3 +184,6 @@ root@planning:/#
 ### Root flag
 root@planning:/# cat /root/root.txt
 8f861c31c5e16db0bd2af08f5ca34417
+
+
+

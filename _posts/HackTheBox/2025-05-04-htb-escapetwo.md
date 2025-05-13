@@ -5,7 +5,7 @@ categories: [HTB Easy Machines]
 tags: [Easy, Windows, HTB, Password Reuse, Active Directory, ADCS, MSSQL, Shadow Credentials, XLSX]
 ---
 
-<img src="../../assets/img/escapetwo/image.png">
+<img src="/assets/img/escapetwo/image.png">
 
 EscapeTwo is an easy HTB machine where you have to acces a `SMB share` where there is a corrupted `.xlsx` file holding credentials to the `sa` user of the `MSSQL` service running. From there we gain access to the machine itself where we find more credentials to move laterally. Finally we abuse a `WriteOwner` DACL to exploit a misconfigured `ADCS` template to gain domain admin.
 
@@ -110,7 +110,7 @@ getting file \accounts.xlsx of size 6780 as accounts.xlsx (49,8 KiloBytes/sec) (
 
 The file itself is corrupted:
 
-<img src="../../assets/img/escapetwo/image2.png">
+<img src="/assets/img/escapetwo/image2.png">
 
 Since .xlsx files are esentially .zip files containing .xml files we can extract it and look at the contents:
 
@@ -310,7 +310,7 @@ INFO: Done in 00M 07S
 
 Inside BloodHound we can see that `ryan` has the `WriteOwner` DACL over `ca_svc`:
 
-<img src="../../assets/img/escapetwo/image3.png">
+<img src="/assets/img/escapetwo/image3.png">
 >We will abuse shadow credentials to not change the password or have to crack it
 
 Let's give ryan owner rights over ca_svc:
@@ -515,3 +515,6 @@ Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\Administrator\Desktop> more root.txt
 bb670e8b2081975605666987d9b2e291
 ```
+
+
+

