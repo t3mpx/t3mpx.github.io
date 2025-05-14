@@ -7,4 +7,5 @@ order: 4
 I'm just a guy that likes hacking, malware and skeletons :)
 
 
-![alt text](../assets/img/about_section/b.jpg)
+<img src="/assets/img/about_section/b.jpg" alt="/assets/img/about_section/b.jpg">
+
