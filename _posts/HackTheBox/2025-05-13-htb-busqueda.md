@@ -5,9 +5,10 @@ categories: [HTB Easy Machines]
 tags: [Easy, Linux, HTB, CVE-2023-43364, Gitea, Docker, Script Hijack]
 ---
 
+<img src="/assets/img/busqueda/image.png" alt="/assets/img/busqueda/image.png">
+
 Busqueda is an easy HTB machine where we abuse an exploit to get a foothold on the machine. From there we can run a python script as sudo that tells us that `gitea` is running, then looking inside a SQL database we get credentials to access `gitea`. From there we can read the `python` script and abuse how it works to get root.
 
-<img src="/assets/img/busqueda/image.png" alt="/assets/img/busqueda/image.png">
 
 # Reconnaissance
 ```bash
@@ -164,6 +165,7 @@ bash-5.1#
 bash-5.1# cat /root/root.txt
 b5c0b5186722822a20618ecb54f25d29
 ```
+
 
 
 
